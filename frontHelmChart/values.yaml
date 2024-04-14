@@ -1,6 +1,0 @@
-ingress:
-  host: localhost   # Ваш хост
-  path: /
-service:
-  name: front   # Имя вашего сервиса
-  port: 80   # Порт вашего сервиса
