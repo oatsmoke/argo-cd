@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name     : front
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name     : in-cluster
+    namespace: front
+  source:
+    path   : "frontHelmChart"
+    repoURL: "git@github.com:oatsmoke/argo-cd.git"
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values_prod.yaml
+      parameters:
+        - name: "container.image"
+          value: nginx:latest
+
+  project: default
+  syncPolicy:
+    automated:
+      prune   : true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
